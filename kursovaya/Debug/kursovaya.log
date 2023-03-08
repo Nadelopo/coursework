@@ -1,0 +1,6 @@
+﻿  Rectangle.cpp
+  kursovaya.cpp
+D:\visual_stuidio_app\kursovaya\kursovaya.cpp(46,9): warning C4018: <: несоответствие типов со знаком и без знака
+D:\visual_stuidio_app\kursovaya\kursovaya.cpp(212,6): warning C4101: id: неиспользованная локальная переменная
+  Создание кода...
+  kursovaya.vcxproj -> D:\visual_stuidio_app\kursovaya\Debug\kursovaya.exe

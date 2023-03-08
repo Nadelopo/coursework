@@ -1,0 +1,2 @@
+C:\Габриелянц аистбд-12\c++\kursovaya\Debug\kursovaya.exe
+D:\visual_stuidio_app\kursovaya\Debug\kursovaya.exe
