@@ -24,8 +24,6 @@ public:
 		y2 = _y2;
 		y3 = _y3;
 		y4 = _y4;
-		cout << x1 << y1 << endl;
-
 	}
 	void getData() {
 		cout << "координаты: (" + to_string(x1) + "," + to_string(y1) + ") (" + to_string(x2) + "," + to_string(y2) + ") (" + to_string(x3) + "," + to_string(y3) + ") (" + to_string(x4) + "," + to_string(y4) + ")\n";
