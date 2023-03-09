@@ -9,7 +9,7 @@ list <Quadrangle> listQuadrangle;
 
 
 bool onlyDigits(const string s) {
-	return s.find_first_not_of("0123456789") == string::npos;
+	return s.find_first_not_of("-0123456789") == string::npos;
 }
 
 template<typename T>
@@ -219,7 +219,7 @@ bool intersectRectangles(int id1, int id2) {
 	int b1 = rect1.getY() + rect1.getHeight();
 	int r2 = rect2.getX() + rect2.getWidth();
 	int b2 = rect2.getY() + rect2.getHeight();
-	return (rect1.getX() < r2) && (rect2.getX() < r1) && (rect1.getY() < b2) && (rect2.getY() < b1);
+	return (rect1.getX() <= r2) && (rect2.getX() <= r1) && (rect1.getY() <= b2) && (rect2.getY() <= b1);
 }
 
 // для четырехугольников
@@ -365,6 +365,43 @@ void Intersect() {
 	cout << endl;
 }
 
+template<typename T>
+void moveElement(int id, list<T>& list, int x, int y) {
+	for (T& el : list) {
+		if (el.getId() == id) {
+			el.MoveO(x, y);
+		}
+	}
+}
+
+void Move() {
+	string value, id,x,y;
+	do {
+		cout << "0 - переместить прямоугольник\n";
+		cout << "1 - переместить четырехугольник\n";
+		cin >> value;
+	} while (value != "0" && value != "1");
+	cout << endl;
+
+	do {
+		cout << "укажите id объекта\n"; cin >> id;
+	} while (!onlyDigits(id));
+
+
+	do {
+		cout << "сметить х на\n"; cin >> x;
+		cout << "сметить y на\n"; cin >> y;
+	} while (!onlyDigits(x) || !onlyDigits(y));
+
+	if (value == "0") {
+		moveElement(stoi(id), listRectangle, stoi(x), stoi(y));
+	}
+	if (value == "1") {
+		moveElement(stoi(id), listQuadrangle, stoi(x), stoi(y));
+	}
+
+}
+
 int main()
 {
 	setlocale(LC_ALL, "ru");
@@ -385,9 +422,10 @@ int main()
 			cout << "2 - получить данные о фигуре объект\n";
 			cout << "3 - проверка существования фигуры\n";
 			cout << "4 - определить факт пересечения объектов\n";
+			cout << "5 - переместить объект на плоскости\n";
 			cout << "9 - очистить консоль\n";
 			cin >> value;
-		} while (value != "0" && value != "1" && value != "2" && value != "3" && value != "4" && value != "9");
+		} while (value != "0" && value != "1" && value != "2" && value != "3" && value != "4" && value != "5" && value != "9");
 		cout << endl;
 
 		if (value == "0") {
@@ -404,6 +442,9 @@ int main()
 		}
 		if (value == "4") {
 			Intersect();
+		}
+		if (value == "5") {
+			Move();
 		}
 		if (value == "9") {
 			system("CLS");
