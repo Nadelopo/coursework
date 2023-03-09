@@ -12,9 +12,19 @@ bool onlyDigits(const string s) {
 	return s.find_first_not_of("0123456789") == string::npos;
 }
 
+template<typename T>
+int getNewId(list<T> list) {
+	int maxId = 0;
+	for (T elem : list) {
+		if (elem.getId() > maxId) {
+			maxId = elem.getId();
+		}
+	}
+	return maxId + 1;
+}
 
 void createRectangle() {
-	int id = size(listRectangle);
+	int id = getNewId(listRectangle);
 	string x, y, width, height;
 	do {
 		cout << "укажите координату x\n"; cin >> x;
@@ -26,9 +36,8 @@ void createRectangle() {
 	listRectangle.push_back(rect);
 }
 
-//fix переопределить способ нахождения id
 void createQuadrangle() {
-	int id = size(listQuadrangle);
+	int id = getNewId(listQuadrangle);
 	string x1, x2, x3, x4, y1, y2, y3, y4;
 	do {
 		cout << "укажите координату x1\n"; cin >> x1;
@@ -62,7 +71,6 @@ void createQuadrangle() {
 	listQuadrangle.push_back(Q);
 }
 
-
 void Create() {
 	string value;
 	do {
@@ -81,7 +89,6 @@ void Create() {
 	cout << endl;
 }
 
-
 template<typename T>
 bool elementExists(int id, list<T> list) {
 	for (auto r : list) {
@@ -91,7 +98,6 @@ bool elementExists(int id, list<T> list) {
 	}
 	return false;
 }
-
 
 void Verification() {
 	string id, choiceValue;
@@ -132,7 +138,6 @@ void getElementById(int id, list<T> list) {
 	}
 }
 
-
 void Show() {
 	string id, choiceValue;
 	do {
@@ -157,17 +162,11 @@ void Show() {
 	cout << endl;
 }
 
-void deleteRectangle(int id) {
-	for (Rectangle& rect : listRectangle) {
-		listRectangle.remove_if([id](Rectangle rect) {
-			if (rect.getId() == id) {
-				return true;
-			}
-			else {
-				return false;
-			}
-			});
-	}
+template<typename T>
+void deleteElement(int id, list<T>& list) {
+	list.remove_if([id](T& elem) {
+		return elem.getId() == id;
+		});
 }
 
 void Delete() {
@@ -184,14 +183,25 @@ void Delete() {
 	} while (!onlyDigits(id));
 	cout << endl;
 
-	if (choiceValue == "0") {
-		if (elementExists(stoi(id), listRectangle)) {
-			deleteRectangle(stoi(id));
+	bool check = choiceValue == "0" ? elementExists(stoi(id), listRectangle) : elementExists(stoi(id), listQuadrangle);
+	if (check) {
+		if (choiceValue == "0") {
+			deleteElement(stoi(id), listRectangle);
 		}
-		else {
-			cout << "такого элемента не существует\n";
+		if (choiceValue == "1") {
+			deleteElement(stoi(id), listQuadrangle);
 		}
 	}
+	else {
+		cout << "такого элемента не существует\n";
+	}
+	//for (auto q : listRectangle) {
+	//	cout << q.getId();
+	//}
+	//cout << endl;
+	//for (auto q : listQuadrangle) {
+	//	cout << q.getId();
+	//}
 	cout << endl;
 }
 
@@ -211,8 +221,6 @@ bool intersectRectangles(int id1, int id2) {
 	int b2 = rect2.getY() + rect2.getHeight();
 	return (rect1.getX() < r2) && (rect2.getX() < r1) && (rect1.getY() < b2) && (rect2.getY() < b1);
 }
-
-
 
 // для четырехугольников
 int direction(int x1, int y1, int x2, int y2, int x3, int y3) {
@@ -255,8 +263,8 @@ bool intersectQuadrangles(int id1, int id2) {
 			qadr2 = r;
 		}
 	}
-	Result q1 = qadr1.getQuadrangle();
-	Result q2 = qadr2.getQuadrangle();
+	QuadrangleCoordinates q1 = qadr1.getQuadrangle();
+	QuadrangleCoordinates q2 = qadr2.getQuadrangle();
 
 	if (doIntersect(q1.x1, q1.y1, q1.x2, q1.y2, q2.x1, q2.y1, q2.x2, q2.y2)) {
 		return true;
@@ -362,7 +370,6 @@ int main()
 	setlocale(LC_ALL, "ru");
 	string value;
 
-	// для пересечения прямоугольников
 	listRectangle.push_back(Rectangle(0, 2, 1, 5, 3));
 	listRectangle.push_back(Rectangle(1, 1, 0, 2, 2));
 	listRectangle.push_back(Rectangle(2, 6, 2, 3, 1));
@@ -370,10 +377,6 @@ int main()
 	listQuadrangle.push_back(Quadrangle(0, 3, 2, 4, 4, 8, 5, 7, 2));
 	listQuadrangle.push_back(Quadrangle(1, 7, 4, 7, 7, 10, 9, 12, 4));
 	listQuadrangle.push_back(Quadrangle(2, 5, 6, 5, 11, 7, 11, 7, 7));
-
-	//Quadrangle r1(0, 3, 2, 4, 4, 6, 4, 7, 2), r2(1, 7, 4, 7, 7, 10, 9, 12, 4);
-	//Quadrangle r1(0,3,2,4,4,6,4,7,2), r2(1,7,4,7,7,10,9,12,4);
-	//Quadrangle r1(0,2,7,4,7,3,4,1,4), r2(1,3,2,3,5,8,5,7,2);
 
 	do {
 		do {
@@ -406,5 +409,5 @@ int main()
 			system("CLS");
 		}
 
-
 	} while (true);
+}

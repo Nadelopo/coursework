@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-struct Result {
+struct QuadrangleCoordinates {
 	int id, x1,x2,x3,x4,y1,y2,y3,y4;
 };
 
@@ -41,8 +41,8 @@ public:
 	int getId() {
 		return id;
 	}
-	Result getQuadrangle() {
-		Result result;
+	QuadrangleCoordinates getQuadrangle() {
+		QuadrangleCoordinates result;
 		result.x1 = x1;
 		result.x2 = x2;
 		result.x3 = x3;
