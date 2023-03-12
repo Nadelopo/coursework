@@ -141,11 +141,13 @@
   <ItemGroup>
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="kursovaya.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Quadrangle.cpp" />
     <ClCompile Include="Rectangle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Figure.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Quadrangle.h" />
     <ClInclude Include="Rectangle.h" />
   </ItemGroup>
